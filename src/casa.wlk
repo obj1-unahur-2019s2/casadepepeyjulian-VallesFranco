@@ -6,6 +6,9 @@ object casaDePepeYJulian {
 	method comprar(cosa) {
 		cosas.add(cosa)
 	}
+	method tirar(cosa) {
+		cosas.remove(cosa)
+	}
 	method cantidadDeCosasCompradas() {
 		return cosas.size()
 	}
@@ -38,10 +41,10 @@ object casaDePepeYJulian {
 		return cosas.filter{c => c.esComida()}.sum{c => c.precio()}
 	}
 	method hayElectrodomesticosBaratos() {
-		return cosas.any{c => c.esElectrodomestico() && c.precio() < 3000}
+		return cosas.any{c => c.esElectrodomestico() and c.precio() < 3000}
 	}
 	method preciosDeElectrodomesticos() {
-		return cosas.filter{c => c.esElectrodomestico()}.map{c => c.precio()}.asSet()
+		return cosas.filter{c => c.esElectrodomestico()}.map{c => c.precio()}.asList()
 	}
 	method nivelEnAumento() {
 		return cosas.last().precio() >= cosas.first().precio() * 2
@@ -57,10 +60,28 @@ object cuentaCorriente {
 	var property saldo = 0
 	
 	method depositar(importe) {
-		self.saldo(importe)
+		saldo += importe
 	}
 	method extraer(importe) {
-		self.saldo(-importe)
+		saldo -= importe
+	}	
+}
+
+object cuentaConGastos {
+	var property saldo = 0
+	
+	method depositar(importe) {
+		saldo += (importe - 20)
 	}
+	method extraer(importe) {
+		if (importe <= 1000) {
+			saldo -= (importe + 20)
+		} else {
+			saldo -= (importe / 50)
+		}
+	}
+}
+
+object cuentaCombinada {
 	
 }
